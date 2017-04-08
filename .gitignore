@@ -35,6 +35,4 @@ cmake-build-debug
 # Executables
 tp
 *.exe
-*.out
 *.app
-
