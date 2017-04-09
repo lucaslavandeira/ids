@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <cstring>
+#include <errno.h>
 #include "Packet.h"
 #include "Parser.h"
 
@@ -11,12 +14,9 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-
     /* Rules parsing here */
 
+    Parser a(argv[2]);
 
-    for (int i = 2; i < argc; i++) {
-        Parser a(argv[i], "r");
-    }
     return 0;
 }
