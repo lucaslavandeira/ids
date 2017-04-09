@@ -5,5 +5,5 @@ Packet::Packet() {
 }
 
 void Packet::hola() {
-    std::cout << "Packet creado!" << std::endl;
+    std::cout << "Fragment creado!" << std::endl;
 }

@@ -2,23 +2,20 @@
 #define IDS_PARSER_H
 
 #include <fstream>
+#include <vector>
+#include "Fragment.h"
+
 using std::fstream;
+
 class Parser {
-private:
-    fstream f;
-    unsigned int message_len;
-    unsigned int identifier;
-    bool MF;
-    unsigned int offset;
-    unsigned long dest;
-    unsigned long source;
-    long data_len;
-    char *data;
 public:
     explicit Parser(const char *file);
     void parse();
+    std::vector<Fragment> get_fragments();
     ~Parser();
+private:
+    fstream f;
+    std::vector<Fragment> fragments;
 };
-
 
 #endif //IDS_PARSER_H

@@ -1,6 +1,5 @@
 .idea
 cmake-build-debug
-valgrind.out
 
 # Created by .ignore support plugin (hsz.mobi)
 ### C++ template

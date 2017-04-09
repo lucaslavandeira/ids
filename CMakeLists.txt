@@ -3,5 +3,5 @@ project(ids)
 
 set(CMAKE_C++_STANDARD 11)
 
-set(SOURCE_FILES src/main.cpp src/Packet.cpp src/Parser.cpp)
+set(SOURCE_FILES src/main.cpp src/Packet.cpp src/Parser.cpp src/Fragment.cpp)
 add_executable(ids ${SOURCE_FILES})

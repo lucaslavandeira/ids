@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include <errno.h>
-#include "Packet.h"
 #include "Parser.h"
 
 using std::cerr;
@@ -18,5 +16,8 @@ int main(int argc, char** argv) {
 
     Parser a(argv[2]);
 
+    std::vector<Fragment> frags = a.get_fragments();
+    frags.
+    std::cout << frags.at(0).get_message();
     return 0;
 }
