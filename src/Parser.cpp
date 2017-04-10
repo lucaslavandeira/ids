@@ -7,6 +7,7 @@
 
 #define HEADER_SIZE 20
 
+using std::fstream;
 
 Parser::Parser(const char *file) : f(fstream(file, fstream::in)) {
     if (!f.is_open()) {

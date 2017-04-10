@@ -2,6 +2,8 @@
 #include <fstream>
 #include <cstring>
 #include "Parser.h"
+#include "RulesParser.h"
+#include "FragmentAssembler.h"
 
 using std::cerr;
 using std::endl;
@@ -12,12 +14,15 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    /* Rules parsing here */
+    RulesParser b(argv[1]);
 
-    Parser a(argv[2]);
+    std::vector<Fragment> frags;
+    for (int i = 2; i < argc; i++) {
+        Parser p(argv[i]);
+        std::vector<Fragment> p_frags = p.get_fragments();
+        frags.insert(frags.end(), p_frags.begin(), p_frags.end());
+    }
 
-    std::vector<Fragment> frags = a.get_fragments();
-    frags.
-    std::cout << frags.at(0).get_message();
+    FragmentAssembler assembler(frags);
     return 0;
 }
