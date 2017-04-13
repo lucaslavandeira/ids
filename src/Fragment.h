@@ -2,11 +2,12 @@
 #define IDS_FRAGMENT_H
 
 #include <string>
+#include <vector>
 
 class Fragment {
     unsigned int message_len;
     unsigned int identifier;
-    bool MF;
+    bool mf;
     unsigned int offset;
     unsigned long source;
     unsigned long dest;
@@ -21,9 +22,12 @@ public:
              unsigned long dest,
              std::string message);
 
+    explicit Fragment(std::vector<Fragment> frags);
     std::string get_message();
-
+    bool precedes(Fragment other);
     ~Fragment();
+    bool more_fragments();
+    static bool compare(Fragment a, Fragment b);
 };
 
 

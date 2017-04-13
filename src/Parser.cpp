@@ -34,15 +34,15 @@ Fragment Parser::parse_next() {
      * Consult assignment PDF for the fields format
      */
 
-    // Fetch header message
+    // Fetch header
     unsigned char header[HEADER_SIZE] = "";
     f.read((char*) header, HEADER_SIZE);
+
     // Bytes 2 and 3: message length
     unsigned int packet_size = return_big_endian(header, 2, 4);
 
     // Bytes 4 and 5: identifier
     unsigned int identifier = return_big_endian(header, 4, 6);
-
 
     // Third bit from byte 6: MF flag
     char mask = 0x10;
@@ -58,7 +58,6 @@ Fragment Parser::parse_next() {
     // Bytes 12 - 15: source IP, 16-19: dest IP
     unsigned long source = return_big_endian(header, 12, 16);
     unsigned long dest = return_big_endian(header, 16, 20);
-
 
     // Read the message in chunks, to be memory efficient
     std::string result("");
@@ -77,8 +76,7 @@ Fragment Parser::parse_next() {
     }
 
     // Create fragment with all the collected data
-    Fragment frag(packet_size, identifier, MF, offset, source, dest, result);
-    return frag;
+    return Fragment(message_len, identifier, MF, offset, source, dest, result);
 }
 
 int Parser::eof() {

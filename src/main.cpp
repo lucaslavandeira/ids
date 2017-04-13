@@ -6,11 +6,10 @@
 #include "FragmentAssembler.h"
 
 
-void file_parse(char* path) {
+void file_parse(char* path, FragmentAssembler assembler) {
     Parser p(path);
     while (!p.eof()) {
-        Fragment frag = p.parse_next();
-        std::cout << frag.get_message() << std::endl;
+        assembler.add_fragment(p.parse_next());
     }
 }
 
@@ -23,12 +22,11 @@ int main(int argc, char** argv) {
 
     RulesParser b(argv[1]);
 
-    std::vector<Fragment> frags;
+    FragmentAssembler assembler;
     for (int i = 2; i < argc; i++) {
-        file_parse(argv[i]);
+        file_parse(argv[i], assembler);
     }
 
-    FragmentAssembler assembler(frags, 0);
     return 0;
 }
 

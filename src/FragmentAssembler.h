@@ -6,7 +6,13 @@
 
 class FragmentAssembler {
 public:
-    explicit FragmentAssembler(std::vector<Fragment> frags, int identifer);
+    FragmentAssembler();
+    void add_fragment(Fragment f);
+    void print_frags();
+private:
+    std::vector<Fragment> frags;
+    std::vector<Fragment> packets;
+    void assemble();
 };
 
 #endif //IDS_FRAGMENTASEMBLER_H
