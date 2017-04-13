@@ -1,5 +1,4 @@
 #include "Fragment.h"
-#include <string>
 #include <cstdlib>
 
 Fragment::Fragment(unsigned int message_len, unsigned int identifier, bool MF,

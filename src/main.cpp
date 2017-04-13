@@ -5,12 +5,19 @@
 #include "RulesParser.h"
 #include "FragmentAssembler.h"
 
-using std::cerr;
-using std::endl;
+
+void file_parse(char* path) {
+    Parser p(path);
+    while (!p.eof()) {
+        Fragment frag = p.parse_next();
+        std::cout << frag.get_message() << std::endl;
+    }
+}
+
 int main(int argc, char** argv) {
     if (argc < 3) {
-        cerr << "ERROR: Invalid arguments\n"
-                       "Usage: ./tp <cfg file> <src files> ..." << endl;
+        std::cerr << "ERROR: Invalid arguments\n"
+                       "Usage: ./tp <cfg file> <src files> ..." << std::endl;
         return 1;
     }
 
@@ -18,11 +25,10 @@ int main(int argc, char** argv) {
 
     std::vector<Fragment> frags;
     for (int i = 2; i < argc; i++) {
-        Parser p(argv[i]);
-        std::vector<Fragment> p_frags = p.get_fragments();
-        frags.insert(frags.end(), p_frags.begin(), p_frags.end());
+        file_parse(argv[i]);
     }
 
-    FragmentAssembler assembler(frags);
+    FragmentAssembler assembler(frags, 0);
     return 0;
 }
+

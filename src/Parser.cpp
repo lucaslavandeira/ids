@@ -6,19 +6,17 @@
 #include "Parser.h"
 
 #define HEADER_SIZE 20
-
+#define MSG_CHUNK 100
 using std::fstream;
 
 Parser::Parser(const char *file) : f(fstream(file, fstream::in)) {
     if (!f.is_open()) {
-        std::cout << file << std::endl;
+        std::cout << "Error" << file << std::endl;
         return;
     }
-
-    parse();
 }
 
-unsigned int return_big_endian(char* src, int start, int stop) {
+unsigned int return_big_endian(unsigned char* src, int start, int stop) {
     /* Parses array src from start to stop (non inclusive) and returns the
      * big endian number from that slice numerical byte values
      * (that is, most significant byte first)
@@ -26,22 +24,21 @@ unsigned int return_big_endian(char* src, int start, int stop) {
     unsigned int result = 0;
     int len = stop - start;
     for (int i = 0; i < len; i++) {
-        result += (+src[start + i] >> (8 * (len - i - 1)));
+        result += (src[start + i] << (8 * (len - i - 1)));
     }
     return result;
 }
 
-void Parser::parse() {
+Fragment Parser::parse_next() {
     /* Parsing for IP packets. Many fields are ignored.
      * Consult assignment PDF for the fields format
      */
 
-    // Fetch header data
-    char header[HEADER_SIZE] = "";
-    f.read(header, HEADER_SIZE);
-
+    // Fetch header message
+    unsigned char header[HEADER_SIZE] = "";
+    f.read((char*) header, HEADER_SIZE);
     // Bytes 2 and 3: message length
-    unsigned int message_len = return_big_endian(header, 2, 4);
+    unsigned int packet_size = return_big_endian(header, 2, 4);
 
     // Bytes 4 and 5: identifier
     unsigned int identifier = return_big_endian(header, 4, 6);
@@ -51,35 +48,42 @@ void Parser::parse() {
     char mask = 0x10;
     bool MF = (mask & header[6]) != 0;
 
-    // Last 5 bytes from byte 6 + byte 7: offset
-    // Mask the last 5 bytes from byte 6
+    // Last 5 bits from byte 6 + byte 7: offset
+    // Mask the last 5 bits from byte 6
     mask = 0x1f;  // 0001 1111
     unsigned int offset = 0;
     offset += (mask & header[6]) << 8;
     offset += header[7];
 
-
     // Bytes 12 - 15: source IP, 16-19: dest IP
     unsigned long source = return_big_endian(header, 12, 16);
     unsigned long dest = return_big_endian(header, 16, 20);
 
-    // Byte 20 onwards: packet data
-    f.seekg(0, f.end);
-    long data_len = f.tellg();
-    data_len -= 20;
-    f.seekg(HEADER_SIZE, f.beg);
 
-    char* data = (char*) malloc((size_t) data_len + 1);
-    memset(data, 0 , (size_t) data_len + 1); // Fix valgrind warning
-    f.read(data, data_len);
-    std::string a(data);
-    free(data);
+    // Read the message in chunks, to be memory efficient
+    std::string result("");
+    unsigned int message_len = packet_size - HEADER_SIZE;
+    char buffer[MSG_CHUNK];
+    unsigned int read = 0;
+    while (read < message_len) {
+        int read_size = MSG_CHUNK;
+        if (message_len - read < MSG_CHUNK) {
+            read_size = message_len - read;
+        }
+        f.read(buffer, read_size);
+        std::string partial(buffer, (unsigned long) read_size);
+        result += partial;
+        read += read_size;
+    }
 
     // Create fragment with all the collected data
-    Fragment frag(message_len, identifier, MF, offset, source, dest, a);
-    fragments.push_back(frag);
+    Fragment frag(packet_size, identifier, MF, offset, source, dest, result);
+    return frag;
 }
 
+int Parser::eof() {
+    return f.peek() == EOF;
+}
 
 std::vector<Fragment> Parser::get_fragments() {
     return fragments;
