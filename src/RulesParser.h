@@ -1,14 +1,20 @@
 #ifndef IDS_RULESPARSER_H
 #define IDS_RULESPARSER_H
 
-#include "Rules.h"
+
+#include <vector>
+#include <string>
+#include "Rule.h"
 
 class RulesParser {
     std::fstream f;
-    Rules rules;
+    std::vector<Rule> rules;
 public:
     explicit RulesParser(const char* file);
-    void getRules();
+    const std::vector<Rule>* get_rules() const;
+
+private:
+    void parse_rule(std::string s);
 };
 
 

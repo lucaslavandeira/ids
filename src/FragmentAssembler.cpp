@@ -35,7 +35,7 @@ void FragmentAssembler::assemble() {
         if (it->precedes(*(it + 1))) {
             assembly_line.push_back(*(it));
         } else {
-            assembly_line.empty();
+            assembly_line.clear();
         }
     }
 }
