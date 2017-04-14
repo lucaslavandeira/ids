@@ -3,6 +3,10 @@
 #include <cstdlib>
 
 #include "RulesParser.h"
+#include "AnyRule.h"
+#include "AllRule.h"
+#include "AlwaysRule.h"
+
 #define kMaxRuleLength 256
 #define DELIM " \n"
 #define RULE_END ';'
@@ -10,6 +14,7 @@
 #define SRC 0
 #define DEST 1
 #define THRES 2
+#define KEYWORD 3
 
 using std::fstream;
 using iter = std::vector<std::string>::iterator;
@@ -52,10 +57,17 @@ void RulesParser::parse_rule(std::string s) {
     unsigned long threshold = std::strtoul(params.at(THRES).c_str(),
                                            &result, 10);
 
-    for (iter it = params.begin() + 4; it != params.end(); it++) {
-        std::cout << *it << std::endl;
+
+    std::string keyword = *(params.begin() + KEYWORD);
+    params = std::vector<std::string>(params.begin() + KEYWORD + 1,
+                                      params.end());
+    if (keyword == "any") {
+        rules.push_back(AnyRule(src, dest, threshold, params));
+    } else if (keyword == "always") {
+        rules.push_back(AlwaysRule(src, dest, threshold, params));
+    } else if (keyword == "all") {
+        rules.push_back(AllRule(src, dest, threshold, params));
     }
-    rules.push_back(Rule(src, dest, threshold, params));
 }
 
 const std::vector<Rule>* RulesParser::get_rules() const {
