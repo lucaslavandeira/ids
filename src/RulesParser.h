@@ -2,11 +2,13 @@
 #define IDS_RULESPARSER_H
 
 #include "Rules.h"
+
 class RulesParser {
+    std::fstream f;
     Rules rules;
 public:
     explicit RulesParser(const char* file);
-    Rules getRules();
+    void getRules();
 };
 
 

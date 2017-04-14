@@ -28,6 +28,10 @@ void FragmentAssembler::assemble() {
             packets.push_back(Fragment(assembly_line));
         }
 
+        if (it + 1 == frags.end()) {
+            continue;
+        }
+
         if (it->precedes(*(it + 1))) {
             assembly_line.push_back(*(it));
         } else {

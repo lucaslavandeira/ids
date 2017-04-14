@@ -11,7 +11,7 @@ using std::fstream;
 
 Parser::Parser(const char *file) : f(fstream(file, fstream::in)) {
     if (!f.is_open()) {
-        std::cout << "Error" << file << std::endl;
+        std::cout << "Error parsing input file: " << file << std::endl;
         return;
     }
 }
@@ -83,9 +83,6 @@ int Parser::eof() {
     return f.peek() == EOF;
 }
 
-std::vector<Fragment> Parser::get_fragments() {
-    return fragments;
-}
 
 Parser::~Parser() {
 }
