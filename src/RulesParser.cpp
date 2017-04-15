@@ -61,17 +61,26 @@ void RulesParser::parse_rule(std::string s) {
     std::string keyword = *(params.begin() + KEYWORD);
     params = std::vector<std::string>(params.begin() + KEYWORD + 1,
                                       params.end());
+    Rule* rule;
     if (keyword == "any") {
-        rules.push_back(AnyRule(src, dest, threshold, params));
+        rule = new AnyRule(src, dest, threshold, params);
     } else if (keyword == "always") {
-        rules.push_back(AlwaysRule(src, dest, threshold, params));
+        rule = new AlwaysRule(src, dest, threshold, params);
     } else if (keyword == "all") {
-        rules.push_back(AllRule(src, dest, threshold, params));
+        rule = new AllRule(src, dest, threshold, params);
+    } else {
+        return;
     }
+    rules.push_back(rule);
 }
 
-const std::vector<Rule>* RulesParser::get_rules() const {
+std::vector<Rule*>* RulesParser::get_rules() {
     return &rules;
 }
 
-
+RulesParser::~RulesParser() {
+    for(Rule* rule: rules) {
+        delete rule;
+    }
+    rules.clear();
+}

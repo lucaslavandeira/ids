@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Rule.h"
 
 Rule::Rule(unsigned long src, unsigned long dest, unsigned long threshold,
@@ -5,6 +6,25 @@ Rule::Rule(unsigned long src, unsigned long dest, unsigned long threshold,
         src(src),
         dest(dest),
         threshold(threshold),
-        words(words)
-{
+        words(words) {
+    count = 0;
+}
+
+
+bool Rule::over_threshold() {
+    return count >= threshold;
+}
+
+
+void Rule::check(const Fragment fragment) {
+    std::cout << "this should never happen" << std::endl;
+}
+
+bool Rule::check_addresses(const Fragment fragment) {
+    return fragment.has_addresses((unsigned int) this->src,
+                                  (unsigned int) this->dest);
+}
+
+Rule::~Rule() {
+
 }

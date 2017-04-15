@@ -6,3 +6,7 @@ AllRule::AllRule(unsigned long src, unsigned long dest, unsigned long threshold,
         Rule(src, dest, threshold, words)
 {
 }
+
+void AllRule::check(const Fragment f) {
+    count++;
+}

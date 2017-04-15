@@ -62,3 +62,7 @@ bool Fragment::precedes(Fragment other) {
            this->dest == other.dest &&
            this->offset + this->message_len == other.offset;
 }
+
+bool Fragment::has_addresses(unsigned int src, unsigned int dest)const {
+    return (this->source == src || !src) && (this->dest == dest || !dest);
+}

@@ -28,8 +28,9 @@ public:
     ~Fragment();
     bool more_fragments();
     static bool compare(Fragment a, Fragment b);
-};
 
+    bool has_addresses(unsigned int src, unsigned int dest) const;
+};
 
 
 #endif //IDS_FRAGMENT_H

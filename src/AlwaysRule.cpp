@@ -6,3 +6,8 @@ AlwaysRule::AlwaysRule(unsigned long src, unsigned long dest,
         Rule(src, dest, threshold, words)
 {
 }
+
+
+void AlwaysRule::check(const Fragment fragment) {
+    count++;
+}
