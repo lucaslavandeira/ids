@@ -31,7 +31,7 @@ void FragmentAssembler::assemble() {
 
         // If it's not the first and there's no packages in the line,
         // move on to the next one
-        if(assembly_line.empty()) {
+        if (assembly_line.empty()) {
             continue;
         }
 
@@ -46,17 +46,17 @@ void FragmentAssembler::assemble() {
         } else {
             assembly_line.clear();
         }
-
     }
 
-    if(assembly_line.size()) {
+    if (assembly_line.size()) {
         Fragment packet(assembly_line);
         if (!packet.more_fragments()) {
             packets.push_back(packet);
 
             // Once we create packet with the fragments, remove them from frags
-            for(iter it = assembly_line.begin(); it != assembly_line.end(); it++) {
-                for(iter jt = frags.begin(); jt != frags.end(); jt++) {
+            for (iter it = assembly_line.begin();
+                 it != assembly_line.end(); it++) {
+                for (iter jt = frags.begin(); jt != frags.end(); jt++) {
                     if (*it == *jt) {
                         frags.erase(jt);
                         break;
@@ -65,8 +65,6 @@ void FragmentAssembler::assemble() {
             }
             assembly_line.clear();
         }
-
-
     }
 }
 

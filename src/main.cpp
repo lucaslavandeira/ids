@@ -8,7 +8,7 @@ void print_alert(Fragment f, unsigned long index) {
               std::hex << f.get_source() << " -> " <<
               std::hex << f.get_dest() << ":";
 
-    for(unsigned long j = 0; j < (f.get_message().size()); j++) {
+    for (unsigned long j = 0; j < (f.get_message().size()); j++) {
         std::cout <<  " " << std::hex << +f.get_message().at(j);
     }
     std::cout << std::endl;
@@ -16,7 +16,6 @@ void print_alert(Fragment f, unsigned long index) {
 
 void file_parse(char* path, FragmentAssembler* assembler,
                 std::vector<Rule*> &rules) {
-
     Parser p(path);
     while (!p.eof()) {
         Fragment f = p.parse_next();
@@ -25,7 +24,7 @@ void file_parse(char* path, FragmentAssembler* assembler,
 
     const std::vector<Fragment> packets = *assembler->get_packets();
 
-    for(Fragment f : packets) {
+    for (Fragment f : packets) {
         for (long unsigned i = 0; i < rules.size(); i++) {
             if (rules.at(i)->check(f)) {
                 print_alert(f, i);

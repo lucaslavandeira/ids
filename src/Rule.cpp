@@ -27,5 +27,4 @@ bool Rule::check_addresses(const Fragment fragment) {
 }
 
 Rule::~Rule() {
-
 }

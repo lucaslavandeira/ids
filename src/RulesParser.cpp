@@ -79,7 +79,7 @@ std::vector<Rule*>* RulesParser::get_rules() {
 }
 
 RulesParser::~RulesParser() {
-    for(Rule* rule: rules) {
+    for (Rule* rule: rules) {
         delete rule;
     }
 }

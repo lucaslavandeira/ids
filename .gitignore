@@ -32,7 +32,11 @@ cmake-build-debug
 *.lib
 
 # Executables
-tp
+est/tp
 *.exe
 *.app
 
+*.cap
+*.cfg
+*.out
+tp

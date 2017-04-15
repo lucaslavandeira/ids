@@ -27,10 +27,7 @@ Fragment::Fragment(std::vector<Fragment> &frags) {
     for (iter it = frags.begin(); it != frags.end(); it ++) {
         this->message_len += it->message_len;
         this->message += it->message;
-
     }
-
-
     this->mf = 0;
     this->offset = 0;
 }
