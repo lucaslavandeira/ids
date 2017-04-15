@@ -16,14 +16,20 @@ Fragment::Fragment(unsigned int message_len, unsigned int identifier, bool MF,
 {
 }
 
-Fragment::Fragment(std::vector<Fragment> frags) {
+Fragment::Fragment(std::vector<Fragment> &frags) {
+    if (frags.back().more_fragments()) {
+        this->mf = 1;
+        return;
+    }
     this->identifier = frags.at(0).identifier;
     this->source = frags.at(0).source;
     this->dest = frags.at(0).dest;
     for (iter it = frags.begin(); it != frags.end(); it ++) {
         this->message_len += it->message_len;
         this->message += it->message;
+
     }
+
 
     this->mf = 0;
     this->offset = 0;
@@ -81,6 +87,17 @@ unsigned long Fragment::get_dest() const {
 
 bool Fragment::is_full_packet() {
     return !offset && !mf;
+}
+
+bool Fragment::is_first() {
+    return offset == 0;
+}
+
+bool Fragment::operator==(Fragment f) {
+    return this->message == f.message &&
+           this->source == f.source &&
+           this->dest == f.dest &&
+           this->identifier == f.identifier;
 }
 
 

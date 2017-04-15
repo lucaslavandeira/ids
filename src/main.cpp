@@ -14,17 +14,16 @@ void print_alert(Fragment f, unsigned long index) {
     std::cout << std::endl;
 }
 
-void file_parse(char* path, FragmentAssembler assembler,
+void file_parse(char* path, FragmentAssembler* assembler,
                 std::vector<Rule*> &rules) {
 
     Parser p(path);
     while (!p.eof()) {
         Fragment f = p.parse_next();
-        assembler.add_fragment(f);
-
+        assembler->add_fragment(f);
     }
 
-    const std::vector<Fragment> packets = *assembler.get_packets();
+    const std::vector<Fragment> packets = *assembler->get_packets();
 
     for(Fragment f : packets) {
         for (long unsigned i = 0; i < rules.size(); i++) {
@@ -46,7 +45,7 @@ int main(int argc, char** argv) {
     std::vector<Rule*>* rules = rules_parser.get_rules();
     FragmentAssembler assembler;
     for (int i = 2; i < argc; i++) {
-        file_parse(argv[i], assembler, *rules);
+        file_parse(argv[i], &assembler, *rules);
     }
 
     return 0;

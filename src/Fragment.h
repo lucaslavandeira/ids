@@ -22,13 +22,14 @@ public:
              unsigned long dest,
              std::string message);
 
-    explicit Fragment(std::vector<Fragment> frags);
+    explicit Fragment(std::vector<Fragment> &frags);
     bool precedes(Fragment other);
     ~Fragment();
     bool more_fragments();
     static bool compare(Fragment a, Fragment b);
     bool is_full_packet();
-
+    bool is_first();
+    bool operator==(Fragment f);
     std::string get_message() const;
     unsigned long get_source() const;
     unsigned long get_dest() const;
