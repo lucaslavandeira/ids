@@ -16,8 +16,9 @@ bool Rule::over_threshold() {
 }
 
 
-void Rule::check(const Fragment fragment) {
+bool Rule::check(const Fragment fragment) {
     std::cout << "this should never happen" << std::endl;
+    return false;
 }
 
 bool Rule::check_addresses(const Fragment fragment) {

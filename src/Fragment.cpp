@@ -20,14 +20,15 @@ Fragment::Fragment(std::vector<Fragment> frags) {
     this->identifier = frags.at(0).identifier;
     this->source = frags.at(0).source;
     this->dest = frags.at(0).dest;
-    this->mf = 0;
-    this->offset = 0;
     for (iter it = frags.begin(); it != frags.end(); it ++) {
         this->message_len += it->message_len;
         this->message += it->message;
     }
+
+    this->mf = 0;
+    this->offset = 0;
 }
-std::string Fragment::get_message() {
+std::string Fragment::get_message() const {
     return message;
 }
 
@@ -37,6 +38,9 @@ Fragment::~Fragment() {
 
 
 bool Fragment::compare(Fragment a, Fragment b) {
+    /* Sorts fragments by (source, dest, ID) tuple, then by their offset
+     * (lower first)
+     */
     if (a.source != b.source) {
         return a.source < b.source;
     }
@@ -66,3 +70,17 @@ bool Fragment::precedes(Fragment other) {
 bool Fragment::has_addresses(unsigned int src, unsigned int dest)const {
     return (this->source == src || !src) && (this->dest == dest || !dest);
 }
+
+unsigned long Fragment::get_source() const {
+    return source;
+}
+
+unsigned long Fragment::get_dest() const {
+    return dest;
+}
+
+bool Fragment::is_full_packet() {
+    return !offset && !mf;
+}
+
+

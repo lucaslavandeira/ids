@@ -8,7 +8,7 @@ class FragmentAssembler {
 public:
     FragmentAssembler();
     void add_fragment(Fragment f);
-    void print_frags();
+    const std::vector<Fragment>* get_packets() const;
 private:
     std::vector<Fragment> frags;
     std::vector<Fragment> packets;

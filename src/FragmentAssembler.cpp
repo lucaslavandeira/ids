@@ -14,28 +14,32 @@ void FragmentAssembler::add_fragment(Fragment f) {
     assemble();
 }
 
-void FragmentAssembler::print_frags() {
-    for (unsigned long i = 0; i < frags.size(); ++i) {
-        std::cout << frags.at(i).get_message() << std::endl;
-    }
-}
 
 void FragmentAssembler::assemble() {
     std::vector<Fragment> assembly_line;
-    for (iter it = frags.begin(); it != frags.end(); it++) {
-        if (it->more_fragments()) {
-            assembly_line.push_back(*(it));
-            packets.push_back(Fragment(assembly_line));
+    for (long unsigned i = 0; i < frags.size(); i++) {
+        Fragment f = frags.at(i);
+        if (f.is_full_packet()) {
+            assembly_line.push_back(f);
+            break;
         }
 
-        if (it + 1 == frags.end()) {
+        if(i == frags.size() -1) {
             continue;
         }
-
-        if (it->precedes(*(it + 1))) {
-            assembly_line.push_back(*(it));
-        } else {
-            assembly_line.clear();
+        if (f.precedes(frags.at(i+1)) || assembly_line.back().precedes(f)) {
+            assembly_line.push_back(f);
         }
     }
+
+    if(assembly_line.size()) {
+        Fragment packet(assembly_line);
+        if (!assembly_line.back().more_fragments()){
+            packets.push_back(packet);
+        }
+    }
+}
+
+const std::vector<Fragment> *FragmentAssembler::get_packets() const {
+    return &packets;
 }

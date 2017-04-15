@@ -23,12 +23,15 @@ public:
              std::string message);
 
     explicit Fragment(std::vector<Fragment> frags);
-    std::string get_message();
     bool precedes(Fragment other);
     ~Fragment();
     bool more_fragments();
     static bool compare(Fragment a, Fragment b);
+    bool is_full_packet();
 
+    std::string get_message() const;
+    unsigned long get_source() const;
+    unsigned long get_dest() const;
     bool has_addresses(unsigned int src, unsigned int dest) const;
 };
 

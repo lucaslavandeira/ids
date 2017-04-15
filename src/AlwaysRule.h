@@ -10,7 +10,8 @@ public:
     AlwaysRule(unsigned long src, unsigned long dest,
          unsigned long threshold, std::vector<std::string> words);
 
-    void check(const Fragment fragment);
+    bool check(const Fragment f);
+    ~AlwaysRule();
 };
 
 

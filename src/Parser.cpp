@@ -45,7 +45,7 @@ Fragment Parser::parse_next() {
     unsigned int identifier = return_big_endian(header, 4, 6);
 
     // Third bit from byte 6: MF flag
-    char mask = 0x10;
+    char mask = 0x20;
     bool MF = (mask & header[6]) != 0;
 
     // Last 5 bits from byte 6 + byte 7: offset

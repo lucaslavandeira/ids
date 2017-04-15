@@ -1,27 +1,38 @@
 #include <iostream>
-#include <algorithm>
-#include <map>
 #include "Parser.h"
 #include "RulesParser.h"
 #include "FragmentAssembler.h"
 
+void print_alert(Fragment f, unsigned long index) {
+    std::cout << "Rule " << index <<": ALERT! " <<
+              std::hex << f.get_source() << " -> " <<
+              std::hex << f.get_dest() << ":";
+
+    for(unsigned long j = 0; j < (f.get_message().size()); j++) {
+        std::cout <<  " " << std::hex << +f.get_message().at(j);
+    }
+    std::cout << std::endl;
+}
 
 void file_parse(char* path, FragmentAssembler assembler,
                 std::vector<Rule*> &rules) {
-    std::vector<Fragment> frags;
+
     Parser p(path);
     while (!p.eof()) {
         Fragment f = p.parse_next();
-        frags.push_back(f);
-        for (auto i = rules.begin(); i != rules.end(); i++) {
-            (*i)->check(f);
+        assembler.add_fragment(f);
+
+    }
+
+    const std::vector<Fragment> packets = *assembler.get_packets();
+
+    for(Fragment f : packets) {
+        for (long unsigned i = 0; i < rules.size(); i++) {
+            if (rules.at(i)->check(f)) {
+                print_alert(f, i);
+            }
         }
     }
-
-    for (auto i = rules.begin(); i != rules.end(); i++) {
-    }
-
-
 }
 
 int main(int argc, char** argv) {

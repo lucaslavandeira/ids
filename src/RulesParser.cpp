@@ -82,5 +82,4 @@ RulesParser::~RulesParser() {
     for(Rule* rule: rules) {
         delete rule;
     }
-    rules.clear();
 }

@@ -8,6 +8,15 @@ AlwaysRule::AlwaysRule(unsigned long src, unsigned long dest,
 }
 
 
-void AlwaysRule::check(const Fragment fragment) {
+bool AlwaysRule::check(const Fragment f) {
+    if (!f.has_addresses(src, dest)) {
+        return false;
+    }
+
     count++;
+
+    return over_threshold();
+}
+
+AlwaysRule::~AlwaysRule() {
 }

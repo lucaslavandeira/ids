@@ -6,6 +6,20 @@ AnyRule::AnyRule(unsigned long src, unsigned long dest, unsigned long threshold,
 {
 }
 
-void AnyRule::check(const Fragment fragment) {
-    count++;
+bool AnyRule::check(const Fragment fragment) {
+    if (!fragment.has_addresses(src, dest)) {
+        return false;
+    }
+
+    for (std::string word : words) {
+        if (fragment.get_message().find(word) != std::string::npos) {
+            count++;
+            return over_threshold();
+        }
+    }
+
+    return false;
+}
+
+AnyRule::~AnyRule() {
 }
