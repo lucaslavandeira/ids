@@ -7,7 +7,7 @@
 
 /* "Abstract" source class for the other rules. Counts matches of strings with
  * specified keywords and source-dest tuples. Has a threshold of allowed counts
- * before the IDS system starts to emit alerts */
+ * before the IDSThread system starts to emit alerts */
 class Rule {
 protected:
     unsigned long src;

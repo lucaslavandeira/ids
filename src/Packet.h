@@ -43,12 +43,6 @@ public:
     bool has_addresses(unsigned int src, unsigned int dest) const;
 
     bool operator==(Packet f) const;
-
-    Packet(Packet&& other);
-
-private:
-    Packet(Packet&) = delete;
-    void operator=(Packet&) = delete;
 };
 
 

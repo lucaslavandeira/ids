@@ -9,6 +9,7 @@
 class Parser {
 public:
     explicit Parser(const char *file);
+    explicit Parser(Parser&& other);
     Packet parse_next();
     int eof();
     ~Parser();

@@ -10,7 +10,7 @@ FragmentAssembler::FragmentAssembler() {
     std::vector<Packet> frags;
 }
 
-void FragmentAssembler::add_fragment(Packet p) {
+void FragmentAssembler::add_fragment(Packet& p) {
     frags.push_back(p);
     assemble();
 }

@@ -86,3 +86,7 @@ int Parser::eof() {
 
 Parser::~Parser() {
 }
+
+Parser::Parser(Parser &&other) {
+    this->f = std::move(other.f);
+}

@@ -1,7 +1,6 @@
 #ifndef IDS_RULESPARSER_H
 #define IDS_RULESPARSER_H
 
-
 #include <vector>
 #include <string>
 #include "Rule.h"

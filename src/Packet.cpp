@@ -99,13 +99,3 @@ bool Packet::operator==(Packet f) const {
            this->identifier == f.identifier;
 }
 
-Packet::Packet(Packet &&other) {
-    this->message_len = other.message_len;
-    this->source = other.source;
-    this->dest = other.dest;
-    this->identifier = other.identifier;
-    this->offset = other.offset;
-    this->mf = other.mf;
-    this->message = other.message;
-}
-
