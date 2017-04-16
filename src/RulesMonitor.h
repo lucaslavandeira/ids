@@ -14,6 +14,7 @@ public:
     explicit RulesMonitor(RulesMonitor&& other);
     bool check(Packet& p);
     unsigned long rules_size();
+    void print(Packet& p, unsigned long rule_index);
 };
 
 

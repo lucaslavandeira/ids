@@ -25,3 +25,16 @@ RulesMonitor::RulesMonitor(RulesMonitor &&other) {
     this->rules = other.rules;
 }
 
+void RulesMonitor::print(Packet &p, unsigned long rule_index) {
+    Lock lock(m);
+
+    std::cout << "Rule " << rule_index <<": ALERT! " <<
+              std::hex << p.get_source() << " -> " <<
+              std::hex << p.get_dest() << ":";
+
+    std::string message = p.get_message();
+    for (unsigned long j = 0; j < (message.size()); j++) {
+        std::cout <<  " " << std::hex << +message.at(j);
+    }
+    std::cout << std::endl;
+}

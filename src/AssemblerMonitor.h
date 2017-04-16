@@ -12,7 +12,7 @@ class AssemblerMonitor {
 
 public:
     explicit AssemblerMonitor(FragmentAssembler& assembler);
-    void add_fragment(Packet& p);
+    Packet add_fragment(Packet& p);
     const std::vector<Packet>* get_packets();
 };
 

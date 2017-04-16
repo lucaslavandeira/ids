@@ -11,7 +11,7 @@ class FragmentAssembler {
 public:
     FragmentAssembler();
     // Pushes a packet (complete or not) to the assembler
-    void add_fragment(Packet& p);
+    Packet add_fragment(Packet& p);
 
     const std::vector<Packet>* get_packets() const;
 private:

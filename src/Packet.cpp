@@ -99,3 +99,7 @@ bool Packet::operator==(Packet f) const {
            this->identifier == f.identifier;
 }
 
+Packet::Packet() {
+    this->mf = 1;
+}
+

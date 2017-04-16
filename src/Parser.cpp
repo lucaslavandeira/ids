@@ -85,6 +85,7 @@ int Parser::eof() {
 
 
 Parser::~Parser() {
+    f.close();
 }
 
 Parser::Parser(Parser &&other) {

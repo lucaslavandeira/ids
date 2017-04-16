@@ -22,7 +22,6 @@ int main(int argc, char** argv) {
 
     std::vector<IDSThread*> threads;
 
-
     for (int i = 2; i < argc; i++) {
         threads.push_back(new IDSThread(argv[i], monitor, r_monitor));
     }
@@ -33,6 +32,7 @@ int main(int argc, char** argv) {
 
     for (Thread* t : threads) {
         t->join();
+        delete t;
     }
 
     return 0;

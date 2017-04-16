@@ -16,6 +16,7 @@ class Packet {
     std::string message;
 
 public:
+    Packet();
     Packet(unsigned int message_len,
              unsigned int identifier,
              bool MF,

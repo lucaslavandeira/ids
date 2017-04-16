@@ -6,6 +6,7 @@
 #include "AssemblerMonitor.h"
 #include "RulesMonitor.h"
 #include "Parser.h"
+#include "AlertPrinter.h"
 
 class IDSThread : public Thread {
     Parser parser;

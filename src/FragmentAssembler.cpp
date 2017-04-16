@@ -10,9 +10,16 @@ FragmentAssembler::FragmentAssembler() {
     std::vector<Packet> frags;
 }
 
-void FragmentAssembler::add_fragment(Packet& p) {
+Packet FragmentAssembler::add_fragment(Packet& p) {
     frags.push_back(p);
     assemble();
+    if (packets.empty()) { // Couldn't assemble a full packet
+        return Packet();
+    }
+
+    Packet result = packets.back();
+    packets.erase(packets.end() -1);
+    return result;
 }
 
 
