@@ -5,14 +5,14 @@ using iter = std::vector<Packet>::iterator;
 
 Packet::Packet(unsigned int message_len, unsigned int identifier, bool MF,
                    unsigned int offset, unsigned long source,
-                   unsigned long dest, std::string message) :
+                   unsigned long dest, std::string& message) :
         message_len(message_len),
         identifier(identifier),
         mf(MF),
         offset(offset),
         source(source),
         dest(dest),
-        message(message)
+        message(std::string(message))
 {
 }
 
@@ -24,6 +24,7 @@ Packet::Packet(std::vector<Packet> &frags) {
     this->identifier = frags.at(0).identifier;
     this->source = frags.at(0).source;
     this->dest = frags.at(0).dest;
+
     for (iter it = frags.begin(); it != frags.end(); it ++) {
         this->message_len += it->message_len;
         this->message += it->message;
@@ -97,3 +98,14 @@ bool Packet::operator==(Packet f) const {
            this->dest == f.dest &&
            this->identifier == f.identifier;
 }
+
+Packet::Packet(Packet &&other) {
+    this->message_len = other.message_len;
+    this->source = other.source;
+    this->dest = other.dest;
+    this->identifier = other.identifier;
+    this->offset = other.offset;
+    this->mf = other.mf;
+    this->message = other.message;
+}
+

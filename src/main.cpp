@@ -20,7 +20,7 @@ void file_parse(char* path, FragmentAssembler* assembler,
                 std::vector<Rule*> &rules) {
     Parser parser(path);
     while (!parser.eof()) {
-        Packet f = parser.parse_next();
+        Packet f(parser.parse_next());
         assembler->add_fragment(f);
     }
 

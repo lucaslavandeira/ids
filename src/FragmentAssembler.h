@@ -19,6 +19,9 @@ private:
      * On success the result is pushes to 'packets'. Only at most one packet is
      * pushed per function call */
     void assemble();
+
+    FragmentAssembler(FragmentAssembler&) = delete;
+    void operator=(FragmentAssembler&) = delete;
 };
 
 #endif //IDS_FRAGMENTASEMBLER_H

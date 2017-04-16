@@ -9,7 +9,7 @@
 class AnyRule : public Rule {
 public:
     AnyRule(unsigned long src, unsigned long dest,
-         unsigned long threshold, std::vector<std::string> words);
+         unsigned long threshold, std::vector<std::string>& words);
 
     bool check(const Packet packet);
     ~AnyRule();

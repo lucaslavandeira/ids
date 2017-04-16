@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 #include "RulesParser.h"
+
 #include "AnyRule.h"
 #include "AllRule.h"
 #include "AlwaysRule.h"

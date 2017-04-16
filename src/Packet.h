@@ -22,7 +22,7 @@ public:
              unsigned int offset,
              unsigned long source,
              unsigned long dest,
-             std::string message);
+             std::string &message);
 
     // Create a packet out of smaller fragments
     explicit Packet(std::vector<Packet> &frags);
@@ -43,6 +43,12 @@ public:
     bool has_addresses(unsigned int src, unsigned int dest) const;
 
     bool operator==(Packet f) const;
+
+    Packet(Packet&& other);
+
+private:
+    Packet(Packet&) = delete;
+    void operator=(Packet&) = delete;
 };
 
 

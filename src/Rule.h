@@ -22,7 +22,7 @@ protected:
     bool over_threshold(); // true if count >= threshold
 public:
     Rule(unsigned long src, unsigned long dest,
-         unsigned long threshold, std::vector<std::string> words);
+         unsigned long threshold, std::vector<std::string>& words);
 
     virtual ~Rule();
 
