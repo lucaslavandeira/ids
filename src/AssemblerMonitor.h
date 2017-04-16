@@ -6,6 +6,8 @@
 #include <vector>
 #include "FragmentAssembler.h"
 
+// Monitor for the FragmentAssembler class, to protect its thread unsafe vector
+// manipulation
 class AssemblerMonitor {
     std::mutex m;
     FragmentAssembler& assembler;
@@ -13,7 +15,6 @@ class AssemblerMonitor {
 public:
     explicit AssemblerMonitor(FragmentAssembler& assembler);
     Packet add_fragment(Packet& p);
-    const std::vector<Packet>* get_packets();
 };
 
 

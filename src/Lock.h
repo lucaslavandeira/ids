@@ -3,6 +3,7 @@
 
 #include <mutex>
 
+// Generic Lock class for easier locking and unlocking of mutexes
 class Lock {
     std::mutex& m;
 

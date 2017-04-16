@@ -6,10 +6,6 @@ Packet AssemblerMonitor::add_fragment(Packet& p) {
     return assembler.add_fragment(p);
 }
 
-const std::vector<Packet> *AssemblerMonitor::get_packets() {
-    return assembler.get_packets();
-}
-
 AssemblerMonitor::AssemblerMonitor(FragmentAssembler &assembler) :
         assembler(assembler)
 {

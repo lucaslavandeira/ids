@@ -16,7 +16,9 @@ class Packet {
     std::string message;
 
 public:
+    // Creates an empty, invalid Packet object. Used for error management
     Packet();
+
     Packet(unsigned int message_len,
              unsigned int identifier,
              bool MF,
@@ -45,6 +47,5 @@ public:
 
     bool operator==(Packet f) const;
 };
-
 
 #endif //IDS_FRAGMENT_H

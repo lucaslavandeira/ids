@@ -3,6 +3,7 @@
 
 #include <thread>
 
+// Abstract thread class, implemented in this project by IDSThread
 class Thread {
     std::thread thread;
 

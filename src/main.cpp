@@ -13,15 +13,14 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    FragmentAssembler assembler;
+    AssemblerMonitor monitor(assembler);
+
     RulesParser rules_parser(argv[1]);
     std::vector<Rule *> rules = *rules_parser.get_rules();
     RulesMonitor r_monitor(rules);
 
-    FragmentAssembler assembler;
-    AssemblerMonitor monitor(assembler);
-
     std::vector<IDSThread*> threads;
-
     for (int i = 2; i < argc; i++) {
         threads.push_back(new IDSThread(argv[i], monitor, r_monitor));
     }

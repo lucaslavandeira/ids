@@ -3,6 +3,10 @@
 
 using iter = std::vector<Packet>::iterator;
 
+Packet::Packet() {
+    this->mf = 1;
+}
+
 Packet::Packet(unsigned int message_len, unsigned int identifier, bool MF,
                    unsigned int offset, unsigned long source,
                    unsigned long dest, std::string& message) :
@@ -36,6 +40,12 @@ Packet::Packet(std::vector<Packet> &frags) {
 Packet::~Packet() {
 }
 
+bool Packet::precedes(Packet other) const {
+    return this->identifier == other.identifier &&
+           this->source == other.source &&
+           this->dest == other.dest &&
+           this->offset + this->message_len == other.offset;
+}
 
 bool Packet::compare(Packet a, Packet b) {
     /* Sorts fragments by (source, dest, ID) tuple, then by their offset
@@ -56,19 +66,12 @@ bool Packet::compare(Packet a, Packet b) {
     return a.offset < b.offset;
 }
 
-bool Packet::get_mf() const {
-    return mf;
+bool Packet::is_full_packet() const {
+    return !offset && !mf;
 }
 
-bool Packet::precedes(Packet other) const {
-    return this->identifier == other.identifier &&
-           this->source == other.source &&
-           this->dest == other.dest &&
-           this->offset + this->message_len == other.offset;
-}
-
-bool Packet::has_addresses(unsigned int src, unsigned int dest)const {
-    return (this->source == src || !src) && (this->dest == dest || !dest);
+bool Packet::is_first() const {
+    return offset == 0;
 }
 
 unsigned long Packet::get_source() const {
@@ -79,18 +82,17 @@ unsigned long Packet::get_dest() const {
     return dest;
 }
 
-bool Packet::is_full_packet() const {
-    return !offset && !mf;
-}
-
-bool Packet::is_first() const {
-    return offset == 0;
+bool Packet::get_mf() const {
+    return mf;
 }
 
 std::string Packet::get_message() const {
     return message;
 }
 
+bool Packet::has_addresses(unsigned int src, unsigned int dest)const {
+    return (this->source == src || !src) && (this->dest == dest || !dest);
+}
 
 bool Packet::operator==(Packet f) const {
     return this->message == f.message &&
@@ -98,8 +100,3 @@ bool Packet::operator==(Packet f) const {
            this->dest == f.dest &&
            this->identifier == f.identifier;
 }
-
-Packet::Packet() {
-    this->mf = 1;
-}
-

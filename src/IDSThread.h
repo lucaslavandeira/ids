@@ -6,11 +6,13 @@
 #include "AssemblerMonitor.h"
 #include "RulesMonitor.h"
 #include "Parser.h"
-#include "AlertPrinter.h"
 
+
+/* Single thread for the IDS, responsible for the parsing of a single capture
+ * file, along with passing the parsed (and possibly fragmented) packets to
+ * the assembler, and the rule detector */
 class IDSThread : public Thread {
     Parser parser;
-
     AssemblerMonitor &monitor;
     RulesMonitor &r_monitor;
 

@@ -5,6 +5,8 @@
 #include <string>
 #include "Rule.h"
 
+/* Parser for the first argument of the program, the rules file. See assignment
+ * for the specified format */
 class RulesParser {
     std::fstream f;
     std::vector<Rule*> rules;

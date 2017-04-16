@@ -1,4 +1,3 @@
-#include <iostream>
 #include "IDSThread.h"
 
 IDSThread::IDSThread(const char *path, AssemblerMonitor &monitor,

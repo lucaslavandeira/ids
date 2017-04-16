@@ -6,6 +6,8 @@
 #include <vector>
 #include "Rule.h"
 
+
+/* Monitor for the Rules vector and the alert emission. */
 class RulesMonitor {
     std::mutex m;
     std::vector<Rule*> rules;
