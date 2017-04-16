@@ -8,8 +8,8 @@ AlwaysRule::AlwaysRule(unsigned long src, unsigned long dest,
 }
 
 
-bool AlwaysRule::check(const Fragment f) {
-    if (!f.has_addresses(src, dest)) {
+bool AlwaysRule::check(const Packet packet) {
+    if (!check_addresses(packet)) {
         return false;
     }
 

@@ -5,12 +5,13 @@
 #include <vector>
 #include "Rule.h"
 
+// Rule that applies if *any* of the keywords are found in the packet's message
 class AnyRule : public Rule {
 public:
     AnyRule(unsigned long src, unsigned long dest,
          unsigned long threshold, std::vector<std::string> words);
 
-    bool check(const Fragment f);
+    bool check(const Packet packet);
     ~AnyRule();
 };
 

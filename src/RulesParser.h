@@ -10,11 +10,12 @@ class RulesParser {
     std::fstream f;
     std::vector<Rule*> rules;
 public:
-    ~RulesParser();
     explicit RulesParser(const char* file);
+    ~RulesParser();
     std::vector<Rule*>* get_rules();
 
 private:
+    // Creates rule object from the string s, formatted as per the assigment
     void parse_rule(std::string s);
 };
 

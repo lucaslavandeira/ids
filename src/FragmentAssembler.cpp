@@ -2,24 +2,26 @@
 #include <algorithm>
 #include "FragmentAssembler.h"
 
-using iter = std::vector<Fragment>::iterator;
+#include "Packet.h"
+
+using iter = std::vector<Packet>::iterator;
 
 FragmentAssembler::FragmentAssembler() {
-    std::vector<Fragment> frags;
+    std::vector<Packet> frags;
 }
 
-void FragmentAssembler::add_fragment(Fragment f) {
-    frags.push_back(f);
+void FragmentAssembler::add_fragment(Packet p) {
+    frags.push_back(p);
     assemble();
 }
 
 
 void FragmentAssembler::assemble() {
-    std::sort(frags.begin(), frags.end(), Fragment::compare);
+    std::sort(frags.begin(), frags.end(), Packet::compare);
 
-    std::vector<Fragment> assembly_line;
+    std::vector<Packet> assembly_line;
     for (long unsigned i = 0; i < frags.size(); i++) {
-        Fragment f = frags.at(i);
+        Packet f = frags.at(i);
         if (f.is_full_packet()) {
             assembly_line.push_back(f);
             break;
@@ -40,7 +42,7 @@ void FragmentAssembler::assemble() {
             assembly_line.push_back(f);
 
             // If it's the end, we already got a full package to assemble
-            if (!f.more_fragments()) {
+            if (!f.get_mf()) {
                 break;
             }
         } else {
@@ -49,8 +51,8 @@ void FragmentAssembler::assemble() {
     }
 
     if (assembly_line.size()) {
-        Fragment packet(assembly_line);
-        if (!packet.more_fragments()) {
+        Packet packet(assembly_line);
+        if (!packet.get_mf()) {
             packets.push_back(packet);
 
             // Once we create packet with the fragments, remove them from frags
@@ -68,6 +70,6 @@ void FragmentAssembler::assemble() {
     }
 }
 
-const std::vector<Fragment> *FragmentAssembler::get_packets() const {
+const std::vector<Packet> *FragmentAssembler::get_packets() const {
     return &packets;
 }

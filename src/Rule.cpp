@@ -16,13 +16,13 @@ bool Rule::over_threshold() {
 }
 
 
-bool Rule::check(const Fragment fragment) {
+bool Rule::check(const Packet fragment) {
     std::cout << "this should never happen" << std::endl;
     return false;
 }
 
-bool Rule::check_addresses(const Fragment fragment) {
-    return fragment.has_addresses((unsigned int) this->src,
+bool Rule::check_addresses(const Packet packet) {
+    return packet.has_addresses((unsigned int) this->src,
                                   (unsigned int) this->dest);
 }
 

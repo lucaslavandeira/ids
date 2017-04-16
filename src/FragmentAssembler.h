@@ -2,16 +2,22 @@
 #define IDS_FRAGMENTASEMBLER_H
 
 #include <vector>
-#include "Fragment.h"
+#include "Packet.h"
 
 class FragmentAssembler {
+    std::vector<Packet> frags;
+    std::vector<Packet> packets;
+
 public:
     FragmentAssembler();
-    void add_fragment(Fragment f);
-    const std::vector<Fragment>* get_packets() const;
+    // Pushes a packet (complete or not) to the assembler
+    void add_fragment(Packet p);
+
+    const std::vector<Packet>* get_packets() const;
 private:
-    std::vector<Fragment> frags;
-    std::vector<Fragment> packets;
+    /* Attempts to assemble a full packet from the fragments in 'frags'.
+     * On success the result is pushes to 'packets'. Only at most one packet is
+     * pushed per function call */
     void assemble();
 };
 

@@ -7,13 +7,13 @@ AllRule::AllRule(unsigned long src, unsigned long dest, unsigned long threshold,
 {
 }
 
-bool AllRule::check(const Fragment f) {
-    if (!f.has_addresses(src, dest)) {
+bool AllRule::check(const Packet packet) {
+    if (!check_addresses(packet)) {
         return false;
     }
 
     for (std::string word : words) {
-        if (f.get_message().find(word) == std::string::npos) {
+        if (packet.get_message().find(word) == std::string::npos) {
             return false;
         }
     }

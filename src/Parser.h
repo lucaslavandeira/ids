@@ -3,13 +3,13 @@
 
 #include <fstream>
 #include <vector>
-#include "Fragment.h"
+#include "Packet.h"
 
 
 class Parser {
 public:
     explicit Parser(const char *file);
-    Fragment parse_next();
+    Packet parse_next();
     int eof();
     ~Parser();
 private:

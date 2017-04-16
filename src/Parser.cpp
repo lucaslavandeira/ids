@@ -29,7 +29,7 @@ unsigned int return_big_endian(unsigned char* src, int start, int stop) {
     return result;
 }
 
-Fragment Parser::parse_next() {
+Packet Parser::parse_next() {
     /* Parsing for IP packets. Many fields are ignored.
      * Consult assignment PDF for the fields format
      */
@@ -76,7 +76,7 @@ Fragment Parser::parse_next() {
     }
 
     // Create fragment with all the collected data
-    return Fragment(message_len, identifier, MF, offset, source, dest, result);
+    return Packet(message_len, identifier, MF, offset, source, dest, result);
 }
 
 int Parser::eof() {
