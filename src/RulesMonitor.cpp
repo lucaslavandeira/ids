@@ -7,27 +7,8 @@ RulesMonitor::RulesMonitor(std::vector<Rule*> rules) :
 {
 }
 
-bool RulesMonitor::check(Packet &p) {
-    Lock lock(m);
-    for (long unsigned i = 0; i < rules.size(); i++) {
-        if (rules.at(i)->check(p)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-unsigned long RulesMonitor::rules_size() {
-    return rules.size();
-}
-
-RulesMonitor::RulesMonitor(RulesMonitor &&other) {
-    this->rules = other.rules;
-}
-
-void RulesMonitor::print(Packet &p, unsigned long rule_index) {
-    Lock lock(m);
-
+// Prints the formatted alert message
+void print(Packet &p, unsigned long rule_index) {
     std::cout << "Rule " << rule_index <<": ALERT! " <<
               std::hex << p.get_source() << " -> " <<
               std::hex << p.get_dest() << ":";
@@ -37,4 +18,18 @@ void RulesMonitor::print(Packet &p, unsigned long rule_index) {
         std::cout <<  " " << std::hex << +message.at(j);
     }
     std::cout << std::endl;
+}
+
+bool RulesMonitor::check_and_print(Packet &p) {
+    Lock lock(m);
+    for (long unsigned i = 0; i < rules.size(); i++) {
+        if (rules.at(i)->check(p)) {
+            print(p, i);
+        }
+    }
+    return false;
+}
+
+RulesMonitor::RulesMonitor(RulesMonitor &&other) {
+    this->rules = other.rules;
 }

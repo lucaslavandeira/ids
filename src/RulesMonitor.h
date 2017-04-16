@@ -14,9 +14,7 @@ class RulesMonitor {
 public:
     explicit RulesMonitor(std::vector<Rule*> rules);
     explicit RulesMonitor(RulesMonitor&& other);
-    bool check(Packet& p);
-    unsigned long rules_size();
-    void print(Packet& p, unsigned long rule_index);
+    bool check_and_print(Packet &p);
 };
 
 

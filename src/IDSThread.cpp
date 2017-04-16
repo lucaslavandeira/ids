@@ -15,12 +15,7 @@ void IDSThread::run() {
         if (result.get_mf()) { // No new packets were assembled
             continue;
         }
-
-        for (long unsigned i = 0; i < r_monitor.rules_size(); i++) {
-            if (r_monitor.check(result)) {
-                r_monitor.print(result, i);
-            }
-        }
+        r_monitor.check_and_print(result);
     }
 }
 
